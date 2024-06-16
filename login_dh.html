@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.claromentis.com/wp-content/uploads/2021/04/6-Great-Benefits-of-Using-Employee-Task-Management-Software.png');
+            background-size: cover;
+        }
+        .login-container {
+            background: rgba(248, 241, 241, 0.881);
+            padding: 2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h1 {
+            margin-bottom: 1em;
+            font-size: 24px;
+            color: #333;
+        }
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            border: none;
+            color: whitesmoke;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .login-container .links {
+            margin-top: 1em;
+        }
+        .login-container .links a {
+            color: #007BFF;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        .login-container .links a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="loginForm" action="/dh_login" method="post" onsubmit="return validateForm()">
+            <input type="email" name="mail" placeholder="Email" required>
+            <input type="password" name="pwd" placeholder="Password" required>
+            <input type="submit" value="Login">
+            <p class="error-message" id="error-message">Please fill in all fields, ensure the email ends with @deptmanager.com, and ensure the password meets the criteria.</p>
+        </form>
+        <div class="links">
+            | <a href="/sign_up">Sign up</a>|
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var email = document.forms["loginForm"]["mail"].value;
+            var password = document.forms["loginForm"]["pwd"].value;
+            var errorMessage = document.getElementById("error-message");
+
+            var emailValid = email.endsWith("@deptmanager.com");
+            var passwordValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,15}$/.test(password);
+
+            if (email == "" || password == "") {
+                errorMessage.textContent = "Please fill in all fields.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            if (!emailValid) {
+                errorMessage.textContent = "Email must end with @admin.com.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            if (!passwordValid) {
+                errorMessage.textContent = "Password must be 5-15 characters long, contain at least one uppercase letter, one lowercase letter, and one number.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            errorMessage.style.display = "none";
+            return true;
+        }
+    </script>
+</body>
+</html>

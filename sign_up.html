@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background-color: rgba(243, 248, 251, 0.944);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .signup-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .signup-container input[type="text"], 
+        .signup-container input[type="email"], 
+        .signup-container input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #100cd8;
+            border-radius: 5px;
+        }
+        .signup-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #1e39cf;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .signup-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #error-message {
+            color: red;
+            display: none;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form name="signupForm" onsubmit="return validateForm()" method="post">
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="mail" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="pwd" required><br>
+            <label for="confirm-password">Confirm Password:</label><br>
+            <input type="password" id="confirm-password" name="pwd_c" required><br>
+            <div id="error-message"></div>
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            var email = document.forms["signupForm"]["mail"].value;
+            var password = document.forms["signupForm"]["pwd"].value;
+            var confirmPassword = document.forms["signupForm"]["pwd_c"].value;
+            var errorMessage = document.getElementById("error-message");
+
+            var emailValid = email.endsWith("@admin.com");
+            var passwordValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,15}$/.test(password);
+
+            if (email == "" || password == "" || confirmPassword == "") {
+                errorMessage.textContent = "Please fill in all fields.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            if (!emailValid) {
+                errorMessage.textContent = "Email must end with @admin.com.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            if (!passwordValid) {
+                errorMessage.textContent = "Password must be 5-15 characters long, contain at least one uppercase letter, one lowercase letter, and one number.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            errorMessage.style.display = "none";
+            return true;
+        }
+    </script>
+</body>
+</html>
